@@ -1,17 +1,11 @@
-import Link from "next/link";
-
-import { cn } from "@/lib/utils";
 import { MainNav } from "@/components/main-nav";
 import { MobileNav } from "@/components/mobile-nav";
-import { ModeToggle } from "@/components/mode-toggle";
-import { buttonVariants } from "@/components/ui/button";
 
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 
-import { LuLogIn } from "react-icons/lu";
-
-import { LogoutBtn } from "@/components/logout-btn";
+import { UserAccountNav } from "@/components/user-account-nav";
+import { LoginBtn } from "@/components/login-btn";
 
 export async function SiteHeader() {
   const session = await getServerSession(authOptions);
@@ -20,7 +14,14 @@ export async function SiteHeader() {
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
         {session ? (
-          <MainNav />
+          <MainNav
+            items={[
+              {
+                title: "Tasks",
+                href: "/",
+              },
+            ]}
+          />
         ) : (
           <MainNav
             items={[
@@ -36,7 +37,14 @@ export async function SiteHeader() {
           />
         )}
         {session ? (
-          <MobileNav />
+          <MobileNav
+            items={[
+              {
+                title: "Tasks",
+                href: "/",
+              },
+            ]}
+          />
         ) : (
           <MobileNav
             items={[
@@ -54,24 +62,16 @@ export async function SiteHeader() {
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none"></div>
           <nav className="flex items-center">
-            <ModeToggle />
-
             {session ? (
-              <LogoutBtn />
+              <UserAccountNav
+                user={{
+                  name: session?.user?.name,
+                  image: session?.user?.image,
+                  email: session?.user?.email,
+                }}
+              />
             ) : (
-              <Link href="/login">
-                <div
-                  className={cn(
-                    buttonVariants({
-                      variant: "ghost",
-                    }),
-                    "w-9 px-0",
-                  )}
-                >
-                  <LuLogIn className="h-4 w-4" />
-                  <span className="sr-only">Login</span>
-                </div>
-              </Link>
+              <LoginBtn />
             )}
           </nav>
         </div>

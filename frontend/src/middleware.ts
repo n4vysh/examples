@@ -7,6 +7,7 @@ export default withAuth(
     const token = await getToken({ req });
     const isAuth = !!token;
     const isAuthPage = req.nextUrl.pathname.startsWith("/login");
+    const isRootPage = req.nextUrl.pathname === "/";
 
     if (isAuthPage) {
       if (isAuth) {
@@ -20,6 +21,10 @@ export default withAuth(
       let from = req.nextUrl.pathname;
       if (req.nextUrl.search) {
         from += req.nextUrl.search;
+      }
+
+      if (isRootPage) {
+        return NextResponse.redirect(new URL(`/welcome`, req.url));
       }
 
       return NextResponse.redirect(
@@ -40,5 +45,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/", "/profile", "/login"],
+  matcher: "/((?!api|_next/static|_next/image|favicon.ico|welcome|pricing).*)",
 };

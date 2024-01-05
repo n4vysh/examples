@@ -8,6 +8,7 @@ import { siteConfig } from "@/config/site";
 
 export const metadata = {
   title: "Pricing",
+  description: "Web application pricing",
 };
 
 export default function PricingPage() {

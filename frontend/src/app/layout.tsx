@@ -17,7 +17,10 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: siteConfig.name,
+  title: {
+    template: `%s - ${siteConfig.name}`,
+    default: siteConfig.name,
+  },
   description: siteConfig.description,
 };
 
@@ -27,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
@@ -36,13 +39,14 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
           disableTransitionOnChange
         >
           <div className="relative flex min-h-screen flex-col">
             <SiteHeader />
-            <div className="flex-1">{children}</div>
+            <div className="flex-1">
+              <div className="container relative">{children}</div>
+            </div>
             <SiteFooter />
           </div>
           <TailwindIndicator />

@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { signIn } from "next-auth/react";
-
+import { useSearchParams } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { CgSpinner } from "react-icons/cg";
@@ -12,6 +12,7 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isAuth0Loading, setIsAuth0Loading] = React.useState<boolean>(false);
+  const searchParams = useSearchParams();
   return (
     <div className={cn("grid gap-6", className)} {...props}>
       <button
@@ -19,7 +20,9 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
         className={cn(buttonVariants({ variant: "outline" }))}
         onClick={() => {
           setIsAuth0Loading(true);
-          signIn("auth0");
+          signIn("auth0", {
+            callbackUrl: searchParams?.get("from") || "/",
+          });
         }}
         disabled={isAuth0Loading}
       >

@@ -46,30 +46,6 @@ export function MainNav({ items }: MainNavProps) {
           ))}
         </nav>
       ) : null}
-      {/* <nav className="flex items-center space-x-6 text-sm font-medium"> */}
-      {/*   <Link */}
-      {/*     href="/welcome#features" */}
-      {/*     className={cn( */}
-      {/*       "transition-colors hover:text-foreground/80", */}
-      {/*       pathname === "/welcome#features" */}
-      {/*         ? "text-foreground" */}
-      {/*         : "text-foreground/60", */}
-      {/*     )} */}
-      {/*   > */}
-      {/*     Features */}
-      {/*   </Link> */}
-      {/*   <Link */}
-      {/*     href="/pricing" */}
-      {/*     className={cn( */}
-      {/*       "transition-colors hover:text-foreground/80", */}
-      {/*       pathname?.startsWith("/pricing") */}
-      {/*         ? "text-foreground" */}
-      {/*         : "text-foreground/60", */}
-      {/*     )} */}
-      {/*   > */}
-      {/*     Pricing */}
-      {/*   </Link> */}
-      {/* </nav> */}
     </div>
   );
 }
