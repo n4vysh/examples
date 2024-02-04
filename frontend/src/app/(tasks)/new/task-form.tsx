@@ -35,6 +35,8 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 
+import { priorities, statuses, labels } from "../data/data";
+
 const taskFormSchema = z.object({
   title: z.string().max(500, {
     message: "Title must not be longer than 500 characters.",
@@ -109,36 +111,16 @@ export function TaskForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="backlog">
-                      <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                        <RxQuestionMarkCircled className="mr-2 h-4 w-4 text-muted-foreground" />
-                        <span>Backlog</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="todo">
-                      <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                        <RxCircle className="mr-2 h-4 w-4 text-muted-foreground" />
-                        <span>Todo</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="in progress">
-                      <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                        <RxStopwatch className="mr-2 h-4 w-4 text-muted-foreground" />
-                        <span>In Progress</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="done">
-                      <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                        <RxCheckCircled className="mr-2 h-4 w-4 text-muted-foreground" />
-                        <span>Done</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="canceled">
-                      <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                        <RxCrossCircled className="mr-2 h-4 w-4 text-muted-foreground" />
-                        <span>Canceled</span>
-                      </div>
-                    </SelectItem>
+                    {statuses.map((status) => {
+                      return (
+                        <SelectItem key={status.value} value={status.value}>
+                          <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                            <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+                            <span>{status.label}</span>
+                          </div>
+                        </SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -161,24 +143,16 @@ export function TaskForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="low">
-                      <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                        <RxArrowDown className="mr-2 h-4 w-4 text-muted-foreground" />
-                        <span>Low</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="medium">
-                      <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                        <RxArrowRight className="mr-2 h-4 w-4 text-muted-foreground" />
-                        <span>Medium</span>
-                      </div>
-                    </SelectItem>
-                    <SelectItem value="high">
-                      <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
-                        <RxArrowUp className="mr-2 h-4 w-4 text-muted-foreground" />
-                        <span>High</span>
-                      </div>
-                    </SelectItem>
+                    {priorities.map((priority) => {
+                      return (
+                        <SelectItem key={priority.value} value={priority.value}>
+                          <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+                            <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
+                            <span>{priority.label}</span>
+                          </div>
+                        </SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
                 <FormMessage />
@@ -201,15 +175,20 @@ export function TaskForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="personal">Personal</SelectItem>
-                    <SelectItem value="work">Work</SelectItem>
+                    {labels.map((label) => {
+                      return (
+                        <SelectItem key={label.value} value={label.value}>
+                          {label.label}
+                        </SelectItem>
+                      );
+                    })}
                   </SelectContent>
                 </Select>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Create task</Button>
+          <Button type="submit">Create new task</Button>
         </form>
       </Form>
     </div>

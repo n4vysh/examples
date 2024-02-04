@@ -1,5 +1,8 @@
 "use client";
 
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 import { RxCross2 } from "react-icons/rx";
 import { Table } from "@tanstack/react-table";
 
@@ -9,6 +12,8 @@ import { DataTableViewOptions } from "@/app/(tasks)/components/data-table-view-o
 
 import { priorities, statuses } from "../data/data";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+
+import { LuPlus } from "react-icons/lu";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -56,6 +61,9 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <DataTableViewOptions table={table} />
+      <Link href="/new" className={cn(buttonVariants({ size: "sm" }), "px-4")}>
+        <LuPlus className="mr-2 h-4 w-4" /> New Task
+      </Link>
     </div>
   );
 }

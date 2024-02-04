@@ -1,0 +1,5 @@
+atlas         0.18.0
+go            1.21.6
+gofumpt       0.5.0
+golangci-lint 1.55.2
+goreleaser    1.23.0

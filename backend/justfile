@@ -1,0 +1,36 @@
+cmd := "simple-todo-api"
+
+mod container
+
+default: mod gen
+
+mod:
+    go mod download
+
+gen:
+    go generate ./...
+
+dev:
+    docker compose up -d
+    docker compose watch --no-up
+
+logs:
+    docker compose logs -f
+
+build *OPTS:
+    go build {{ OPTS }} -o ./tmp/main cmd/{{ cmd }}/main.go
+
+lint:
+    goreleaser check
+    golangci-lint run
+
+fmt:
+    gofumpt -l -w .
+
+# TODO: update command
+migrate:
+    atlas
+
+# TODO: update command
+release:
+    goreleaser
